@@ -76,7 +76,7 @@ def optimalheroes(cost, damage, name):
 
 heroCollection = herocol.HeroEff(0)
 heroCollection.createheroes()
-heroCollection.drawheroes(0, 10, 1)
+heroCollection.drawheroes(0, 50, 0.5)
 
 
 # cost, damage, name = calculatedmgandcost(heroes, 3000, 0)

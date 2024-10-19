@@ -56,29 +56,36 @@ class HeroEff:
 
     def damage(self, heronum, level):
         return self.herolist[heronum - 1].totaldamage(level)
-    
+
     def costtolevel(self, level):
         costs = np.zeros(len(self.herolist))
         for i in range(0, len(costs)):
             costs[i] = self.herolist[i].levelcost(level)
         return costs
-    
+
     def levelwithgold(self, money):
         levels = np.zeros(len(self.herolist))
         for i in range(0, len(levels)):
             levels[i] = self.herolist[i].costlevel(money)
         return np.floor(levels * EXP_LEVEL_VALUE)
-    
+
     def damagewithgold(self, money):
         levels = self.levelwithgold(money)
+        leveldiff = np.remainder(levels, 25)
+        print(leveldiff)
+        mask = np.zeros(53)
+        for i in range (1, 53):
+            if(leveldiff[0] - leveldiff[i] > 12):
+                mask[i] = 0 #-np.log10(4)
+
         damages = np.zeros(len(levels))
         for i in range(0, len(levels)):
-            damages[i] = self.herolist[i].totaldamage(levels[i])
+            damages[i] = self.herolist[i].totaldamage(levels[i]) + mask[i]
         return damages
-    
+
     def drawheroes(self, start, iters, step):
         damagesmain = []
-        for i in range(start, iters, step):
+        for i in np.arange(start, iters, step):
             damagesmain.append(self.damagewithgold(i))
         # plt.figure(dpi=2000)
         damagesmain = np.swapaxes(damagesmain, 0, 1)
@@ -92,5 +99,5 @@ class HeroEff:
 
         for i in range(1, 53):
             damagesmain[i] = damagesmain[i] - damagesmain[0]
-            plt.plot(range(start + starts[i] * step, iters, step), damagesmain[i][starts[i]:])
+            plt.plot(np.arange(start + starts[i] * step, iters, step), damagesmain[i][starts[i]:])
         plt.show()
