@@ -75,8 +75,8 @@ class HeroEff:
         print(leveldiff)
         mask = np.zeros(53)
         for i in range (1, 53):
-            if(leveldiff[0] - leveldiff[i] > 12):
-                mask[i] = 0 #-np.log10(4)
+            if((leveldiff[0] - leveldiff[i] > 12) and (levels[i] > 200)):
+                mask[i] = -np.log10(4)
 
         damages = np.zeros(len(levels))
         for i in range(0, len(levels)):
@@ -90,7 +90,7 @@ class HeroEff:
         # plt.figure(dpi=2000)
         damagesmain = np.swapaxes(damagesmain, 0, 1)
 
-        starts = iters * np.ones(53, dtype=np.int64)
+        starts = np.ones(53, dtype=np.int64) * np.ceil(iters / step)
         for i in range(0, 53):
             for j in range(0, len(damagesmain[i])):
                 if (damagesmain[i][j] > 0):
@@ -99,5 +99,5 @@ class HeroEff:
 
         for i in range(1, 53):
             damagesmain[i] = damagesmain[i] - damagesmain[0]
-            plt.plot(np.arange(start + starts[i] * step, iters, step), damagesmain[i][starts[i]:])
+            plt.plot(np.arange(start + starts[i] * step, iters, step), damagesmain[i][int(starts[i]):])
         plt.show()

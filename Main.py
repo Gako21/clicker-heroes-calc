@@ -70,14 +70,12 @@ def optimalheroes(cost, damage, name):
             if (dmgpercost[i][j] > (temp[index])):
                 temp[index] = dmgpercost[i][j]
                 result[index] = name[i]
-    print(result)
 #            plt.plot(cost[i][j], dmgpercost[i][j], marker="o")
 #    plt.show()
 
 heroCollection = herocol.HeroEff(0)
 heroCollection.createheroes()
-heroCollection.drawheroes(0, 50, 0.5)
-
+heroCollection.drawheroes(0, 50, 0.03125)
 
 # cost, damage, name = calculatedmgandcost(heroes, 3000, 0)
 # optimalheroes(cost, damage, name)
